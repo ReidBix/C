@@ -1,0 +1,95 @@
+C00F	000    		jmp 	start	skip around the variables
+0005    001	n 	dw	5	int n = 5
+0000    002	i 	dw 	0	int i
+0000    003 	j 	dw 	0	int j
+0000    004 	t 	dw 	0	int t
+0000    005  	zero	dw 	0 	zero value
+0001    006	one 	dw 	1	one value
+0000    007 	B[j]  	dw	0	B[j]
+0000    008 	B[j-1]	dw	0	B[j-1]
+0000	009	jc	dw	0	int jc (change in j for multiple loops)
+0000	00A
+0000	00B
+0000	00C
+0000	00D
+0000	00E
+3005    00F   	start 	load 	zero	i = 0
+4002    010    	 	store	i      	
+3001    011	loop1 	load	n	if (i >= n) goto xit   			
+6002    012 		sub     i
+E04E    013 		jmpl	xit	         
+D04E    014   		jmpe	xit	 	             
+3001    015 	 	load 	n	j = n - 1
+6006    016  	  	sub 	one
+4003    017  		store	j 
+3005	018		load	zero	jc = 0
+4009	019		store	jc
+3003    01A	loop2	load	j	if (i >= j) increment loop1
+6002    01B		sub	i
+E03E    01C		jmpl	inc1
+D03E    01D		jmpe	inc1
+305E	01E	ldit	dw	305E	a[j]
+4007	01F		store	B[j]		
+4004	020		store	t    		
+305D	021	ldit2	dw	305D	a[j-1]	
+4008    022 		store	B[j-1]	a[j-1]
+3007	023		load	B[j]
+6008	024		sub	B[j-1]					
+E027    025  		jmpl	swit	if a[j] < a[j-1] switch
+C02B    026 		jmp	inc2	if a[j] >= a[j-1] increment loop2
+3008    027  	swit	load	B[j-1]	a[j-1]
+405E    028	swit1	store	a[j]	a[j] = a[j-1]      	
+3004    029 		load	t		
+405D    02A	swit2	store	a[j-1]	a[j-1] = t | a[j]
+3003    02B	inc2	load	j	j -= 1
+6006    02C  		sub	one
+4003    02D		store	j
+3009	02E		load	jc	jc += 1
+5006	02F		add	one
+4009	030		store 	jc			
+301E	031		load	ldit	move back one element in ldit
+6006	032		sub	one
+401E	033		store	ldit
+3021	034		load	ldit2	move back one element in ldit2
+6006	035		sub	one
+4021	036		store	ldit2
+3028	037		load	swit1	move back one element in swit1
+6006	038		sub	one
+4028	039		store	swit1		
+302A	03A		load	swit2	move back one element in swit2
+6006	03B		sub	one
+402A	03C		store	swit2           
+C01A    03D		jmp	loop2	goto loop2
+3002    03E  	inc1 	load	i	i += 1
+5006    03F		add	one
+4002    040 		store 	i
+301E	041		load	ldit	change back ldit to last element
+5009	042		add	jc
+401E	043		store	ldit	
+3021	044		load	ldit2	change back ldit2 to last element
+5009	045		add	jc
+4021	046		store	dit2					
+3028	047		load	swit1	change back swit1 to last element
+5009	048		add	jc
+4028	049		store	swit1		
+302A	04A		load	swit2	change back swit2 to last element
+5009	04B		add	jc
+402A	04C		store	swit2
+C011    04D  		jmp	loop1	goto loop1	
+305A    04E 	xit	load	a[0]	print new order a[0,1,2,3,4]
+1800    04F		printH
+305B    050		load	a[1]
+1800    051 		printH
+305C    052		load	a[2]
+1800    053    		printH
+305D    054  		load	a[3]
+1800    055  		printH
+305E    056   		load	a[4]
+1800    057    		printH
+0000    058 		halt		halt 		
+0000    059  
+0008    05A	a[0]	dw	8	int a[0] re-sort: 1
+0005    05B	a[1]	dw	5	int a[1] re-sort: 3
+0003    05C	a[2]	dw	3	int a[2] re-sort: 5
+0006    05D 	a[3]	dw	6	int a[3] re-sort: 6
+0001    05E  	a[4]	dw	1	int a[4] re-sort: 8

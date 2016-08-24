@@ -1,0 +1,23 @@
+C007	000		jmp 	start	skip around the variables
+0017	001	l      	dw	00	l = 00 lines in file
+0000	002    	i      	dw	0	i = 0 for loop
+0000	003     zero   	dw	0	zero value
+0001	004    	one    	dw	1	one value
+0000	005    	                                                
+0000	006                                                         
+3003	007    	start	load	zero	i = 0            
+4002	008		store	i
+3001	009	loop	load	l	if (i>=l) goto xit
+6002	00A		sub	i
+E016	00B		jmpl	xit
+D016	00C		jmpe	xit
+3000	00D	ldln	dw	30XX	load line instruction
+1800	00E		printH	
+3002	00F	inc	load	i	i += 1
+5004	010		add	one
+4002	011		store	i
+300D	012		load	ldln	move to next line of file
+5004	013		add	one	
+400D	014		store	ldln
+C009	015		jmp	loop	go back to start of loop
+0000	016	xit	halt	halt

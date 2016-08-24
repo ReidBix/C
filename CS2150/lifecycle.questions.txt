@@ -1,0 +1,10 @@
+/**
+*Reid Bixler
+*rmb3yz
+*September 2, 2014
+*CS 2150 In-Lab 1 lifecycle.questions.txt
+*/
+
+What does the destructor do?
+Why is the reference bariable in PART 4 oref=o1?
+

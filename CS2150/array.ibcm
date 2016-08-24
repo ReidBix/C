@@ -1,0 +1,51 @@
+C00A  000		jmp 	start	skip around the variables
+0000  001	a 	dw	0	int a[]
+000A  002	n 	dw 	10	int n = 10
+0000  003	i 	dw 	0	int i
+0000  004	m 	dw 	0	int m
+0000  005	c	dw 	0 	int c
+0000  006  	zero 	dw 	0	zero value
+0001  007   	one 	dw	1	one value
+0000  008	
+0000  009
+3006  00A       start 	load 	zero	i = 0
+4003  00B		store	i
+3028  00C     		load 	a[0]	m = a[0]
+4004  00D        	store	m	      			
+3002  00E	loop 	load	n	if (i >= N) goto xit
+6003  00F		sub     i	         
+E023  010		jmpl	xit	 	             
+D023  011	 	jmpe	xit
+3006  012		load 	zero	c = 0
+4005  013		store	c
+3028  014	ldit	dw	302D	load instruction c = a[i]
+4005  015		store	c
+3004  016      		load 	m	compare m and c
+6005  017     		sub 	c	
+E01A  018     		jmpl	new	if m < c, store as new m
+C01C  019      		jmp	incr	if m = 0 or m > 0, just increment
+3005  01A     	new	load	c	if (m < a[i]) -> m = a[i]
+4004  01B      		store 	m
+3003  01C      	incr	load	i	i += 1
+5007  01D      		add	one
+4003  01E      		store 	i
+3014  01F		load	ldit	next a[i+1]
+5007  020		add	one
+4014  021		store 	ldit
+C00E  022      		jmp	loop	goto loop        
+3004  023  	xit     load	m	print m
+1800  024	        printH
+0000  025		halt		halt 		
+0000  026
+0000  027	
+0002  028	a[0]	dw	2	int a[0]
+0004  029	a[1]	dw	4	int a[1]
+0006  02A	a[2]	dw	6	int a[2]
+0008  02B	a[3]	dw	8	int a[3]
+000A  02C	a[4]	dw	10	int a[4]
+0020  02D	a[5]	dw	32	int a[5]
+000D  02E	a[6]	dw	14	int a[6]
+0010  02F	a[7]	dw	16	int a[7]
+0012  030	a[8]	dw	18	int a[8]
+0014  031	a[9]	dw	20	int a[9]
+0000  032

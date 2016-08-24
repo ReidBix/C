@@ -1,0 +1,33 @@
+C007  00		jmp 	start	skip around the variables
+0000  01	s 	dw 	0	int s
+0000  02	x 	dw 	0	int x
+0000  03	y 	dw 	0	int y
+0000  04	z 	dw 	0	int z
+0000  05	zero 	dw 	0	zero value
+0001  06	one 	dw	1	one value
+1000  07	start 	readH		read x
+4002  08	      	store 	x	
+1000  09		readH		read y
+4003  0A		store	y	
+1000  0B		readH		read z
+4004  0C		store	z
+3006  0D		load 	one	s = 1
+4001  0E		store 	s
+3001  0F	loop 	load 	s	do while (s != 0), otherwise goto xit
+3005  10		load 	zero	s = 0
+4001  11		store 	s	s = x + y + z
+3001  12		load 	s	
+5002  13		add 	x
+5003  14		add 	y 
+5004  15		add 	z
+4001  16		store 	s	
+1800  17		printH		print s
+D01A  18		jmpe 	xit	if s == 0, goto xit
+C007  19		jmp 	loop	otherwise, goto loop
+3002  1A	xit 	load 	x	print x
+1800  1B		printH
+3003  1C		load	y	print y
+1800  1D		printH
+3004  1E		load	z	print z
+1800  1F		printH
+0000  20		halt		halt

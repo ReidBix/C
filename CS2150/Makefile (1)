@@ -1,0 +1,20 @@
+# Reid Bixler
+# rmb3yz
+# October 21, 2014
+# CS 2150 Pre-Lab 6 Makefile
+
+CXX = clang++ $(CXXFLAGS)
+CXXFLAGS = -Wall -O2
+DEGUG = -Wall -g
+
+OFILES = wordPuzzle.o
+
+.SUFFIXES: .o .cpp
+
+wordPuzzle: $(OFILES)
+	$(CXX) $(DEBUG) $(OFILES)
+
+wordPuzzle.o: wordPuzzle.cpp hashTable.h timer.h
+	$(CXX) -c wordPuzzle.cpp
+
+
